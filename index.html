@@ -85,5 +85,46 @@
   <div class="card">
     <div class="title">¡Felicidades, mi amor!</div>
     <div class="message">
-      Qué suerte tengo de tenerte. Este carrusel es solo una pequeña forma de decirte cuánto te adoro 💖
+      Estas imágenes son solo una muestra de lo hermoso que es compartir momentos contigo 💖
     </div>
+
+    <div class="carousel">
+      <img id="carousel-image" src="" alt="Foto de amor">
+    </div>
+    <button onclick="siguienteImagen()">Siguiente</button>
+
+    <div class="heart">❤️</div>
+  </div>
+
+  <script>
+    const imagen = document.getElementById("carousel-image");
+    let index = 0;
+    const imagenes = [];
+
+    // Intenta cargar hasta 50 imágenes enumeradas
+    for (let i = 1; i <= 50; i++) {
+      const path = `fotos/${i}.jpg`;
+      const img = new Image();
+      img.src = path;
+
+      img.onload = () => {
+        imagenes.push(path);
+        // Si es la primera imagen que se carga, mostrarla
+        if (imagenes.length === 1) {
+          imagen.src = imagenes[0];
+        }
+      };
+    }
+
+    function siguienteImagen() {
+      if (imagenes.length === 0) return;
+      index = (index + 1) % imagenes.length;
+      imagen.src = imagenes[index];
+    }
+
+    setInterval(() => {
+      siguienteImagen();
+    }, 1000);
+  </script>
+</body>
+</html>
