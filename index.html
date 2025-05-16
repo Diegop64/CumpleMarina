@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Felicitaciones con Amor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Open+Sans&display=swap" rel="stylesheet" />
   <style>
     body {
       background: #ffffff;
       font-family: 'Open Sans', sans-serif;
       display: flex;
       justify-content: center;
-      align-items: center;
       flex-direction: column;
-      height: 100vh;
+      align-items: center;
+      min-height: 100vh;
       margin: 0;
+      padding: 2rem;
     }
 
     .card {
@@ -21,8 +22,9 @@
       padding: 2rem;
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      max-width: 600px;
+      max-width: 700px;
       text-align: center;
+      margin-bottom: 2rem;
     }
 
     .title {
@@ -35,37 +37,7 @@
     .message {
       font-size: 1.2rem;
       color: #333;
-      margin-bottom: 2rem;
-    }
-
-    .carousel {
-      position: relative;
-      width: 100%;
-      height: 300px;
-      overflow: hidden;
       margin-bottom: 1rem;
-    }
-
-    .carousel img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 12px;
-      transition: opacity 0.5s ease;
-    }
-
-    button {
-      background-color: #e91e63;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background-color: #c2185b;
     }
 
     .heart {
@@ -79,52 +51,61 @@
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.2); }
     }
+
+    /* Estilo para galería de fotos */
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      max-width: 700px;
+    }
+
+    .gallery img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
   </style>
 </head>
 <body>
+
   <div class="card">
     <div class="title">¡Felicidades, mi amor!</div>
     <div class="message">
-      Estas imágenes son solo una muestra de lo hermoso que es compartir momentos contigo 💖
+      Aquí están todas las imágenes que reflejan lo especial que eres para mí 💖
     </div>
-
-    <div class="carousel">
-      <img id="carousel-image" src="" alt="Foto de amor">
-    </div>
-    <button onclick="siguienteImagen()">Siguiente</button>
-
     <div class="heart">❤️</div>
   </div>
 
+  <div class="gallery" id="gallery"></div>
+
   <script>
-    const imagen = document.getElementById("carousel-image");
-    let index = 0;
-    const imagenes = [];
+    const gallery = document.getElementById('gallery');
+    const maxImages = 50; // Máximo número de fotos a buscar
+    let loadedImages = 0;
 
-    // Intenta cargar hasta 50 imágenes enumeradas
-    for (let i = 1; i <= 50; i++) {
-      const path = `fotos/${i}.jpg`;
+    for(let i = 1; i <= maxImages; i++) {
       const img = new Image();
-      img.src = path;
+      img.src = `fotos/${i}.jpg`;
+      img.alt = `Foto ${i}`;
 
+      // Solo añadir la imagen si carga correctamente
       img.onload = () => {
-        imagenes.push(path);
-        // Si es la primera imagen que se carga, mostrarla
-        if (imagenes.length === 1) {
-          imagen.src = imagenes[0];
-        }
-      };
+        loadedImages++;
+        gallery.appendChild(img);
+      }
+      // Ignorar si la imagen no existe (onerror)
     }
-
-    function siguienteImagen() {
-      if (imagenes.length === 0) return;
-      index = (index + 1) % imagenes.length;
-      imagen.src = imagenes[index];
-    }
-
-    setInterval(() => {
-      siguienteImagen();
-    }, 1000);
   </script>
+
 </body>
 </html>
